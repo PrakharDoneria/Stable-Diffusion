@@ -12,7 +12,7 @@ AUTHORIZATION_TOKEN = os.environ.get("AUTHORIZATION_TOKEN")
 
 def query(payload):
     try:
-        headers = {"Authorization": f"Bearer {AUTHORIZATION_TOKEN}"}
+        headers = {"Authorization": "Bearer {}".format(AUTHORIZATION_TOKEN)}
         response = requests.post(API_URL, headers=headers, json=payload)
         response.raise_for_status()  # Raise an exception for bad status codes
         return response.content
@@ -30,11 +30,10 @@ def upload_image_to_imgbb(image_bytes):
         return response.json()["data"]["url"]
     except requests.exceptions.RequestException as e:
         return None
-      
+
 @app.route('/')
 def hello():
     return 'Server is healthy'
-
 
 @app.route('/prompt', methods=['POST'])
 def process_prompt():
@@ -63,4 +62,4 @@ def process_prompt():
         return jsonify({'error': 'Failed to retrieve image'}), 500
 
 if __name__ == '__main__':
-  app.run(debug=True, host='0.0.0.0' , port=8080)
+    app.run(debug=True, host='0.0.0.0', port=8080)
