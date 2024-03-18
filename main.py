@@ -30,6 +30,11 @@ def upload_image_to_imgbb(image_bytes):
         return response.json()["data"]["url"]
     except requests.exceptions.RequestException as e:
         return None
+      
+@app.route('/')
+def hello():
+    return 'Server is healthy'
+
 
 @app.route('/prompt', methods=['POST'])
 def process_prompt():
