@@ -44,20 +44,11 @@ def process_prompt():
     image_bytes = query({"inputs": prompt})
 
     if image_bytes:
-        try:
-            image = Image.open(io.BytesIO(image_bytes))
-            image.save("img.jpg")
-
-            with open("img.jpg", "rb") as f:
-                image_bytes = f.read()  # Read the image bytes
-
-            imgbb_url = upload_image_to_imgbb(image_bytes)
-            if imgbb_url:
-                return jsonify({'image_url': imgbb_url}), 200
-            else:
-                return jsonify({'error': 'Failed to upload image to imgBB'}), 500
-        except Exception as e:
-            return jsonify({'error': f'Error processing image: {str(e)}'}), 500
+        imgbb_url = upload_image_to_imgbb(image_bytes)
+        if imgbb_url:
+            return jsonify({'image_url': imgbb_url}), 200
+        else:
+            return jsonify({'error': 'Failed to upload image to imgBB'}), 500
     else:
         return jsonify({'error': 'Failed to retrieve image'}), 500
 
