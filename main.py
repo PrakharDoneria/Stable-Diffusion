@@ -1,7 +1,5 @@
 from flask import Flask, request, jsonify
 import requests
-import io
-from PIL import Image
 import os
 
 app = Flask(__name__)
@@ -35,9 +33,9 @@ def upload_image_to_imgbb(image_bytes):
 def hello():
     return 'Server is healthy'
 
-@app.route('/prompt', methods=['POST'])
+@app.route('/prompt', methods=['GET'])
 def process_prompt():
-    prompt = request.form.get('prompt', '')
+    prompt = request.args.get('prompt', '')
     if not prompt:
         return jsonify({'error': 'No prompt provided'}), 400
 
